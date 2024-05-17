@@ -88,4 +88,3 @@ beer_cans_per_state <- beer_markets |>
   arrange(-total_cans)
 ```
 
-gitadd
