@@ -1,19 +1,21 @@
 project:
   type: website
-  output-dir: "."
+  output-dir: "." 
 
 website:
-  title: "YOUR NAME"
+  title: "Anthony Braden"
   navbar:
     pinned: true
     left:
       - text: Project
-        href: project.qmd
+        href: final_project.qmd
+      - text: R Basics
+        href: danl-200-quarto.qmd
       - text: Blog
         href: blog-listing.qmd
             
   page-footer: 
-    center: "Powered with GitHub and Quarto<br>© YOUR NAME, 2023"
+    center: "Powered with GitHub and Quarto<br>© Anthony Braden, 2024"
 
 format:
   html:
