@@ -1,0 +1,92 @@
+---
+title: "Beer and its Demographics"
+format: html
+editor: visual
+---
+
+## Introduction
+
+Most adults in the United States consume Beer regularly. Businesses can make better economic decisions based on collected data about the markets for beer to improve upon their business and become more profitable. This analysis will provide the viewer with important information relating to how different demographics of individuals in different parts of the United States consume beer.
+
+Our project aims to solve misconseptions companies have realting to their consumer bases based on real market data and visualizations. We will analyze how various demographics and geographic locations affect the consumption of beer.
+
+## Exploratory Data Analysis
+
+```{r}
+library(tidyverse)
+library(skimr)
+beer_markets <- read_csv("https://bcdanl.github.io/data/beer_markets_all.csv")
+view(beer_markets)
+```
+
+# Part 1
+
+What beer do consumer prefer based on their State of residence? The following is a visualization of our answer, followed by some analysis and key takeaways.
+
+```{r}
+#| fig-height: 12
+# What type of beer does each state prefer? Is the distribution the same throughout the country?
+ggplot(beer_markets, aes(y = state, fill = brand)) +
+  geom_bar(position = "dodge")
+# Regardless of State, the distribution of beer sales is 
+```
+
+Based on this visualization, we can draw the following conclusions.
+
+# Part 2
+
+Which states consume the most beer? The following visualization shows the top 10 states in the US based on their total fluid consumption of beer.
+
+```{r}
+# THIS IS THE ONE (TOP 10 STATES BY QUANTITY OF BEER)
+beer_by_state <- beer_markets |> 
+  group_by(state) |> 
+  summarize(
+    total_beer = sum(beer_floz)
+  ) |> 
+  arrange(-total_beer) |> 
+  slice_head(n = 10)
+```
+
+```{r}
+# How much beer does each state consume
+ggplot(beer_by_state,
+       aes(y = fct_reorder(state, total_beer), x = total_beer)) +
+  geom_point()
+```
+
+This graph shows
+
+# Part 3
+
+```{r}
+ggplot(beer_markets,
+       aes(y = race, x = log10(dollar_spent))) +
+  geom_boxplot() +
+  facet_wrap(~buyertype)
+```
+
+# Part 4
+
+```{r}
+#| fig-height: 9
+# How much beer does the average person purchase spend based on their marital status and gender & brand
+ggplot(beer_markets, aes(x = price_per_floz)) +
+  geom_freqpoly() +
+  facet_grid(brand~buyertype)
+```
+
+
+
+# Part 5
+
+```{r}
+beer_cans_per_state <- beer_markets |> 
+  filter(container == "CAN") |> 
+  group_by(state) |> 
+  summarize(
+    total_cans = sum(quantity)
+  ) |> 
+  arrange(-total_cans)
+```
+
